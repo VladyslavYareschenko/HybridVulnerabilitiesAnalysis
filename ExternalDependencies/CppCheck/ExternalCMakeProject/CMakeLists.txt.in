@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.15)
+include(ExternalProject)
+
+project("${CPP_CHECK_COMPONENT_NAME}_Setup_Project" NONE)
+
+ExternalProject_Add("${CPP_CHECK_COMPONENT_NAME}_Setup"
+    PREFIX                             "${CPP_CHECK_HOME_PATH}"
+    TMP_DIR                            "${CPP_CHECK_HOME_PATH}/tmp"
+    STAMP_DIR                          "${CPP_CHECK_HOME_PATH}/stamp"
+    DOWNLOAD_DIR                       "${CPP_CHECK_SRC_PATH}"
+    SOURCE_DIR                         "${CPP_CHECK_SRC_PATH}"
+    GIT_REPOSITORY                     "https://github.com/danmar/cppcheck"
+    GIT_TAG                            "main"
+    CONFIGURE_COMMAND                  cmake ${CPP_CHECK_SRC_PATH} -DUSE_MATCHCOMPILER=ON
+    BINARY_DIR                         "${CPP_CHECK_BUILD_PATH}"
+    BUILD_COMMAND                      cmake --build ./
+    BUILD_IN_SOURCE                    0
+    INSTALL_COMMAND                    ""
+)

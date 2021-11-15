@@ -6,6 +6,9 @@ set(EXTERNAL_DEPENDENCIES_SRC_DIR "ExternalDependencies")
 include("${EXTERNAL_DEPENDENCIES_SRC_DIR}/SetupExternalDependencies.cmake")
 add_subdirectory(AnalysisCaller)
 
+configure_file ("Config.h.in" "${CMAKE_CURRENT_SOURCE_DIR}/Config.h")
+include_directories (${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(HybridAnalyzer main.cpp)
 add_dependencies(HybridAnalyzer ${EXTERNAL_DEPENDENCIES_SRC_DIR})
 target_link_libraries(HybridAnalyzer AnalysisCaller Qt5::Widgets)

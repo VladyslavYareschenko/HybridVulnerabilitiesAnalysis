@@ -1,20 +1,23 @@
 include(ExternalProject)
 
-set(VALGRIND_HOME_DIR "${VALGRIND_COMPONENT_NAME}")
-set(VALGRIND_SRC_DIR "valgrind")
-set(VALGRIND_BIN_DIR "build_${VALGRIND_SRC_DIR}")
-set(VALGRIND_BIN_PATH "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}/${VALGRIND_BIN_DIR}")
+add_custom_target(${VALGRIND_COMPONENT_NAME})
 
-ExternalProject_Add(
-        ${VALGRIND_COMPONENT_NAME}
-        PREFIX                             "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}"
-        TMP_DIR                            "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}/tmp"
-        STAMP_DIR                          "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}/stamp"
-        DOWNLOAD_DIR                       "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}/${VALGRIND_SRC_DIR}"
-        GIT_REPOSITORY                     "git://sourceware.org/git/valgrind.git"
-        GIT_TAG                            "VALGRIND_3_18_1"
-        CONFIGURE_COMMAND                  ./autogen.sh && ./configure --prefix=${CMAKE_BINARY_DIR}/${VALGRIND_COMPONENT_NAME}
-        SOURCE_DIR                         "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_HOME_DIR}/${VALGRIND_SRC_DIR}"
-        BUILD_COMMAND                      make -j4
-        BUILD_IN_SOURCE                    1
-        INSTALL_COMMAND                    make install)
+set(VALGRIND_SRC_DIR "valgrind")
+set(VALGRIND_HOME_PATH "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_COMPONENT_NAME}")
+set(VALGRIND_SRC_PATH "${EXTERNAL_DEPENDENCIES_PATH}/${VALGRIND_SRC_DIR}")
+set(VALGRIND_BUILD_PATH "${CMAKE_BINARY_DIR}/${VALGRIND_COMPONENT_NAME}")
+
+# Dilemma:
+# 1) An external executable can be found during the root project configuration, in which case we will know its location
+#    at the configuration and compilation respectively. But it looks a bit hacky.
+# 2) An external executable can be found at runtime.  It seems that this option is not better...
+configure_file("ExternalCMakeProject/CMakeLists.txt.in" "ExternalCMakeProject/CMakeLists.txt")
+set(EXTERNAL_CMAKE_PROJECT_DIR "ExternalCMakeProject")
+set(EXTERNAL_CMAKE_PROJECT_WORKING_DIR "${CMAKE_CURRENT_BINARY_DIR}/${EXTERNAL_CMAKE_PROJECT_DIR}")
+execute_process(COMMAND "${CMAKE_COMMAND}" -G "${CMAKE_GENERATOR}"
+        "${EXTERNAL_CMAKE_PROJECT_WORKING_DIR}" WORKING_DIRECTORY "${EXTERNAL_CMAKE_PROJECT_WORKING_DIR}"
+        )
+
+execute_process(COMMAND "${CMAKE_COMMAND}" --build
+        "${EXTERNAL_CMAKE_PROJECT_WORKING_DIR}" WORKING_DIRECTORY "${EXTERNAL_CMAKE_PROJECT_WORKING_DIR}"
+        )

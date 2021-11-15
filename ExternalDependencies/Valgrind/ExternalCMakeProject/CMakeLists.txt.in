@@ -1,0 +1,19 @@
+cmake_minimum_required(VERSION 3.15)
+include(ExternalProject)
+
+project("${VALGRIND_COMPONENT_NAME}_Setup_Project" NONE)
+
+ExternalProject_Add(
+        ${VALGRIND_COMPONENT_NAME}
+        PREFIX                             "${VALGRIND_HOME_PATH}"
+        TMP_DIR                            "${VALGRIND_HOME_PATH}/tmp"
+        STAMP_DIR                          "${VALGRIND_HOME_PATH}/stamp"
+        DOWNLOAD_DIR                       "${VALGRIND_SRC_PATH}"
+        SOURCE_DIR                         "${VALGRIND_SRC_PATH}"
+        GIT_REPOSITORY                     "git://sourceware.org/git/valgrind.git"
+        GIT_TAG                            "VALGRIND_3_18_1"
+        CONFIGURE_COMMAND                  ./autogen.sh && ./configure --prefix=${VALGRIND_BUILD_PATH}
+        BUILD_COMMAND                      make -j4
+        BUILD_IN_SOURCE                    1
+        INSTALL_COMMAND                    make install
+)
