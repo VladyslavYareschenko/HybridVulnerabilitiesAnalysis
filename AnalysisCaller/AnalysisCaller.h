@@ -4,8 +4,8 @@
 
 class AnalysisCaller {
 public:
-    static void runCweCheck(std::string path);
-    static void runCppCheck(std::string path);
-    static void runValgrindCheck(std::string path);
+    std::string callStaticSourcesAnalysis(std::string forPath);
+    std::string callStaticBinaryAnalysis(std::string forExecutable);
+    std::string callDynamicBinaryAnalysis(std::string forPath);
 };
 

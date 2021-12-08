@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.15)
 project (cxx_project_with_rust_lib)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_BUILD_TYPE DEBUG)
+
+set(PATH_TO_GHIDRA "/home/osboxes/dev/ghidra_10.0.2_PUBLIC")
 
 set(EXTERNAL_DEPENDENCIES_SRC_DIR "ExternalDependencies")
 include("${EXTERNAL_DEPENDENCIES_SRC_DIR}/SetupExternalDependencies.cmake")

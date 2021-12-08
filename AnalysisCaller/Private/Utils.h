@@ -2,6 +2,6 @@
 
 #include <string>
 
-void callCweCheckerExternRun(std::string forPath);
-void callCppCheckProcess(std::string forPath);
-void callValgrindCheckProcess(std::string forPath);
+std::string callCWECheckerProcess(std::string forPath);
+std::string callCppCheckProcess(std::string forPath);
+std::string callValgrindCheckProcess(std::string forPath);

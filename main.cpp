@@ -24,6 +24,9 @@ int main(int argc, char **argv)
                                                window.size(),
                                                handle->screen()->availableGeometry()));
     }
+//    AnalysisCaller::runCweCheck("/home/osboxes/CLionProjects/TestProjectWithVulnerabilities/executable");
+//    AnalysisCaller::runCppCheck("/home/osboxes/CLionProjects/TestProjectWithVulnerabilities/main.cpp");
+//    AnalysisCaller::runValgrindCheck("/home/osboxes/CLionProjects/TestProjectWithVulnerabilities/executable");
 
     return app.exec();
 }

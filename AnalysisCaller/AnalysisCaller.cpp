@@ -1,17 +1,17 @@
 #include "AnalysisCaller.h"
 #include "Private/Utils.h"
 
-void AnalysisCaller::runCweCheck(std::string path)
+std::string AnalysisCaller::callStaticSourcesAnalysis(std::string forPath)
 {
-    callCweCheckerExternRun(std::move(path));
+    return callCppCheckProcess(forPath);
 }
 
-void AnalysisCaller::runCppCheck(std::string path)
+std::string AnalysisCaller::callStaticBinaryAnalysis(std::string forExecutable)
 {
-    callCppCheckProcess(std::move(path));
+    return callCWECheckerProcess(forExecutable);
 }
 
-void AnalysisCaller::runValgrindCheck(std::string path)
+std::string AnalysisCaller::callDynamicBinaryAnalysis(std::string forPath)
 {
-    callValgrindCheckProcess(std::move(path));
+    return callValgrindCheckProcess(forPath);
 }

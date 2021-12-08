@@ -1,9 +1,14 @@
 include(ExternalProject)
 
+if (NOT DEFINED PATH_TO_GHIDRA)
+    message(FATAL_ERROR "No ghidra path specified for cwe checker.")
+endif()
+
 set(CWE_CHECKER_SRC_DIR "cwe_checker_lib")
 set(CWE_CHECKER_HOME_PATH "${EXTERNAL_DEPENDENCIES_PATH}/${CWE_CHECKER_COMPONENT_NAME}")
 set(CWE_CHECKER_SRC_PATH "${EXTERNAL_DEPENDENCIES_PATH}/${CWE_CHECKER_SRC_DIR}")
 set(CWE_CHECKER_BUILD_PATH "${CMAKE_BINARY_DIR}/${CWE_CHECKER_COMPONENT_NAME}")
+set(PATCH_FILE "${CMAKE_CURRENT_SOURCE_DIR}/Patches/cweCheckerPatch.diff")
 
 # Dilemma:
 # 1) An external shared library can be configured during the root project configuration, in which case we can easily

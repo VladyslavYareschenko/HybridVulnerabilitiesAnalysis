@@ -1,4 +1,5 @@
 #pragma once
 
+const char* const CWECheckerExecutable = "${CWE_CHECKER_EXECUTABLE}";
 const char* const CppCheckExecutable = "${CPP_CHECK_EXECUTABLE}";
 const char* const ValgrindExecutable = "${VALGRIND_EXECUTABLE}";
